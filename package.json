@@ -1,0 +1,17 @@
+{
+  "name": "relatoriodetriagem-vt",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Um clique no PJe 2º Grau gera o PDF completo da caixa Triagem.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "build": "node build.mjs && node build_vt.mjs"
+  },
+  "dependencies": {
+    "jspdf": "3.0.4"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}

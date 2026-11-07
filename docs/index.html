@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Relatório da caixa Minutar Despacho - PJe 1º grau</title>
+<style>
+  body { font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; color: #0f172a; max-width: 720px; margin: 40px auto; padding: 0 20px; background: #fff; }
+  h1 { color: #1e3a8a; margin-bottom: 4px; }
+  .sub { color: #475569; margin-top: 0; }
+  ol li { margin: 14px 0; }
+  .botao { display: inline-block; padding: 12px 22px; background: #1e3a8a; color: #fff; border-radius: 10px; font-weight: 700; text-decoration: none; cursor: grab; }
+  .caixa { background: #f1f5f9; border-radius: 10px; padding: 14px 18px; margin: 24px 0; }
+  code { background: #e2e8f0; padding: 1px 5px; border-radius: 4px; }
+  small { color: #64748b; }
+</style>
+</head>
+<body>
+<h1>Relatório da caixa Minutar Despacho</h1>
+<p class="sub">PJe 1º grau (Varas do Trabalho). Um clique no PJe e o navegador baixa um PDF com todos os processos da caixa.</p>
+
+<ol>
+  <li><strong>Mostre a barra de favoritos</strong> do navegador: <code>Ctrl+Shift+B</code>.</li>
+  <li><strong>Arraste este botão</strong> para a barra de favoritos:<br><br>
+    <a class="botao" href="javascript:(function()%7Bif(!%2F%5C.jus%5C.br%24%2F.test(location.hostname))%7Balert('Abra%20o%20PJe%20e%20clique%20de%20novo.')%3Breturn%7Dvar%20s%3Ddocument.createElement('script')%3Bs.src%3D'https%3A%2F%2Fdelanoalmeida-bit.github.io%2Frelatorio-caixas-pje%2Frelatorio.js%3Fv%3D'%2BMath.floor(Date.now()%2F36e5)%3Bs.onerror%3Dfunction()%7Balert('N%C3%A3o%20consegui%20carregar%20o%20gerador%20do%20relat%C3%B3rio%20(rede%20ou%20bloqueio%20do%20tribunal).')%7D%3Bdocument.body.appendChild(s)%7D)()" onclick="alert('Não clique aqui: arraste o botão para a barra de favoritos.');return false;">Relatório Minutar Despacho</a>
+  </li>
+  <li><strong>No PJe</strong> (logado, em qualquer tela), clique no favorito. Não feche a aba nem mude de página
+    até o PDF baixar. O arquivo sai com nome como
+    <code>Relatório Minutar Despacho - 2ª Vara do Trabalho de São Luís (TRT-16) - 07-11-2026 às 15h40.pdf</code>.</li>
+</ol>
+
+<div class="caixa">
+  <strong>Privacidade.</strong> O relatório é montado dentro do seu navegador, com a sua sessão do PJe.
+  Nenhum dado de processo é enviado para lugar nenhum. CPF, e-mail, telefone e endereço são descartados;
+  em segredo de justiça, as partes não aparecem no PDF. O PDF contém nomes de partes: trate-o como documento interno.
+</div>
+
+<small>Versão 1.0.0-vt. Baseado em github.com/paulodca/relatoriodetriagem (PJe 2º grau).</small>
+</body>
+</html>

@@ -1,0 +1,7 @@
+node_modules/
+*.pdf
+*.txt
+!requirements.txt
+desktop.ini
+!docs/bookmarklet.txt
+dist/
