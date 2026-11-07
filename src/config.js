@@ -7,8 +7,14 @@ export const CONFIG = Object.freeze({
 
   // Caixa do Painel Global do PJe 1º grau. Descoberto no TRT-16 (2ª VT de São Luís):
   // "Minutar Despacho" = agrupamento 16 (no 2º grau, a Triagem é o 12).
+  // Caixa padrão (usada quando o script é colado no Console, sem botão).
   AGRUPAMENTO: 16,
   NOME_CAIXA: 'Minutar Despacho',
+
+  // Um botão (favorito) para cada caixa da página de instalação.
+  CAIXAS: [
+    { id: 16, nome: 'Minutar Despacho' }
+  ],
 
   // A lista vem em páginas: a 1ª sozinha (diz quantas são), as demais em paralelo.
   TAMANHO_PAGINA_LISTAGEM: 100,

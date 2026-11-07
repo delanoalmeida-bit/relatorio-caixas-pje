@@ -4,6 +4,19 @@
  */
 import { jsPDF } from 'jspdf';
 import { CONFIG } from './config.js';
+
+/*
+ * Qual caixa ler: cada botão (favorito) define window.__relatorioCaixa = {id, nome} antes de
+ * carregar este script. Sem isso (ex.: colado no Console), usa a caixa padrão do config.
+ */
+function caixaEscolhida() {
+  const c = typeof window !== 'undefined' && window.__relatorioCaixa;
+  if (c && Number.isInteger(Number(c.id)) && Number(c.id) > 0) {
+    return Object.freeze(Object.assign({}, CONFIG, { AGRUPAMENTO: Number(c.id), NOME_CAIXA: String(c.nome || 'agrupamento ' + c.id) }));
+  }
+  return CONFIG;
+}
+const CFG = caixaEscolhida();
 import { coletarTriagem, lerCookie, ErroSessao } from './coleta/coletor.js';
 import { gerarRelatorio } from './relatorio/gerar.js';
 import { criarOverlay } from './overlay/overlay.js';
@@ -11,7 +24,7 @@ import { criarOverlay } from './overlay/overlay.js';
 function textoProgresso(p) {
   if (p.fase === 'listagem') {
     const paginas = p.qtdPaginas ? ` (página ${p.paginasLidas} de ${p.qtdPaginas})` : '';
-    return { texto: `Lendo a lista da caixa ${CONFIG.NOME_CAIXA}${paginas}...`, pct: 2 + Math.round((p.paginasLidas / Math.max(1, p.qtdPaginas || 1)) * 3) };
+    return { texto: `Lendo a lista da caixa ${CFG.NOME_CAIXA}${paginas}...`, pct: 2 + Math.round((p.paginasLidas / Math.max(1, p.qtdPaginas || 1)) * 3) };
   }
   if (p.fase === 'repescagem') {
     return { texto: `Tentando de novo os que falharam: ${p.feitos + 1}/${p.total}`, pct: 96 };
@@ -56,6 +69,7 @@ async function executar() {
     const coleta = await coletarTriagem({
       origin: location.origin,
       xsrf,
+      config: CFG,
       aoProgresso: p => {
         fase = p.fase;
         if (p.fase === 'listagem') { tentativaLista = p.tentativa || 1; erroLista = p.erro || ''; }
@@ -66,7 +80,7 @@ async function executar() {
 
     if (coleta.totalNaCaixa === 0) {
       clearInterval(relogio);
-      overlay.erro(`A caixa ${CONFIG.NOME_CAIXA} está vazia. Confira o órgão selecionado no PJe.`);
+      overlay.erro(`A caixa ${CFG.NOME_CAIXA} está vazia. Confira o órgão selecionado no PJe.`);
       return;
     }
 
@@ -80,7 +94,7 @@ async function executar() {
       meta: {
         hostname: location.hostname, totalNaCaixa: coleta.totalNaCaixa, criterio: coleta.criterio,
         geradoEm, versao: CONFIG.VERSAO, segundos: coleta.segundos,
-        nomeCaixa: CONFIG.NOME_CAIXA, faixasDias: CONFIG.FAIXAS_DIAS
+        nomeCaixa: CFG.NOME_CAIXA, faixasDias: CFG.FAIXAS_DIAS
       },
       JsPDF: jsPDF
     });
