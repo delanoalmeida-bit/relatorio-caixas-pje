@@ -20,7 +20,7 @@ export function faseDoProcesso(registro) {
   const p = registro.processo || {};
   const bruta = limpar(l.faseProcessual || p.labelFaseProcessual || p.faseProcessual);
   if (!bruta) return 'não informada';
-  const n = bruta.normalize('NFD').replace(/[̀-ͯ]/g, '').toUpperCase();
+  const n = bruta.normalize('NFD').replace(/\p{M}/gu, '').toUpperCase();
   if (n.startsWith('CONHEC')) return 'Conhecimento';
   if (n.startsWith('LIQUID')) return 'Liquidação';
   if (n.startsWith('EXEC')) return 'Execução';

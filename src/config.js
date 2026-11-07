@@ -12,8 +12,13 @@ export const CONFIG = Object.freeze({
   NOME_CAIXA: 'Minutar Despacho',
 
   // Um botão (favorito) para cada caixa da página de instalação.
+  // Números conferidos no TRT-16 em 07/11/2026 (GET /agrupamentotarefas/{id}).
   CAIXAS: [
-    { id: 16, nome: 'Minutar Despacho' }
+    { id: 16, nome: 'Minutar Despacho' },
+    { id: 9, nome: 'Minutar Sentença' },
+    { id: 14, nome: 'Prazos Vencidos' },
+    { id: 8, nome: 'Análises' },
+    { id: 5, nome: 'Comunicação e Expedientes' }
   ],
 
   // A lista vem em páginas: a 1ª sozinha (diz quantas são), as demais em paralelo.
