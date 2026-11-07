@@ -16,6 +16,8 @@ export const CONFIG = Object.freeze({
   CAIXAS: [
     { id: 16, nome: 'Minutar Despacho' },
     { id: 9, nome: 'Minutar Sentença' },
+    { id: 23, nome: 'Minutar Sentenças - Con' },
+    { id: 24, nome: 'Minutar Sentenças - Liq/Exec' },
     { id: 14, nome: 'Prazos Vencidos' },
     { id: 8, nome: 'Análises' },
     { id: 5, nome: 'Comunicação e Expedientes' }
