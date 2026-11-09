@@ -9,6 +9,13 @@ Adaptação de [paulodca/relatoriodetriagem](https://github.com/paulodca/relator
 Abra **https://delanoalmeida-bit.github.io/relatorio-caixas-pje/**, mostre a barra de favoritos
 (`Ctrl+Shift+B`) e arraste o botão para ela. No PJe, logado, clique no favorito.
 
+## Entradas de ontem (triagem diária)
+Botão à parte (verde na página de instalação). Pergunta a data de início — o padrão é o último dia
+útil, e na segunda-feira pega sexta a domingo — e baixa um `.md` só com os processos que entraram
+na caixa no período e ainda estão nela: tabela para leitura e bloco JSON para o assistente de
+triagem diária. O relatório completo não muda. Código em `src/entradas/`; divisão dos assistentes
+pelo dígito final em `src/config.js` (`DIVISAO_ASSISTENTES`).
+
 ## Privacidade
 Tudo roda no navegador, com a sessão do próprio usuário. Nenhum dado de processo sai do computador.
 CPF, e-mail, telefone e endereço são descartados antes de montar o PDF; em segredo de justiça, as

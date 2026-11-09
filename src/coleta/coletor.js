@@ -128,6 +128,11 @@ export async function coletarTriagem({
       criterio = `${caixa}, todos os processos (nenhum estava sem responsável)`;
     }
   }
+  // Filtro opcional sobre a listagem (ex.: botão "entradas de ontem"): só os filtrados são detalhados.
+  if (typeof config.FILTRO_LISTAGEM === 'function') {
+    selecionados = selecionados.filter(config.FILTRO_LISTAGEM);
+    criterio = `${caixa}, ${config.DESCRICAO_FILTRO || 'filtro aplicado'}`;
+  }
 
   // 2. Detalhes de cada processo (3 GETs em paralelo por processo)
   async function detalhar(item) {

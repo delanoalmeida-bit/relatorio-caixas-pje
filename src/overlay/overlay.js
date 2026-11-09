@@ -63,18 +63,19 @@ export function criarOverlay(doc = document, win = (typeof window !== 'undefined
       if (typeof pct === 'number') barra.style.width = Math.max(0, Math.min(100, pct)) + '%';
     },
     detalhe(texto) { detalhe.textContent = texto || ''; },
-    concluir(texto, { baixarDeNovo, baixarDados } = {}) {
+    definirTitulo(texto) { titulo.textContent = texto; },
+    concluir(texto, { baixarDeNovo, baixarDados, detalheFinal, rotuloBaixarDeNovo } = {}) {
       liberar();
       titulo.textContent = 'Relatório pronto';
       titulo.style.color = '#4ade80';
       alerta.style.display = 'none';
       msg.textContent = texto;
-      detalhe.textContent = 'O PDF foi baixado (veja a pasta Downloads). Pode fechar este aviso.';
+      detalhe.textContent = detalheFinal || 'O PDF foi baixado (veja a pasta Downloads). Pode fechar este aviso.';
       barra.style.width = '100%';
       barra.style.background = '#4ade80';
       acoes.textContent = '';
       botao('Fechar', '#4ade80', fechar);
-      if (baixarDeNovo) botao('Baixar o PDF de novo', '#e2e8f0', baixarDeNovo);
+      if (baixarDeNovo) botao(rotuloBaixarDeNovo || 'Baixar o PDF de novo', '#e2e8f0', baixarDeNovo);
       if (baixarDados) botao('Dados brutos (.txt)', '#94a3b8', baixarDados);
     },
     erro(texto) {

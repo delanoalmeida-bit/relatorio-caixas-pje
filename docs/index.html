@@ -13,6 +13,8 @@
   .caixa { background: #f1f5f9; border-radius: 10px; padding: 14px 18px; margin: 24px 0; }
   code { background: #e2e8f0; padding: 1px 5px; border-radius: 4px; }
   small { color: #64748b; }
+  h2 { color: #1e3a8a; margin-top: 36px; }
+  .botao-entradas { background: #0f766e; }
 </style>
 </head>
 <body>
@@ -34,6 +36,14 @@
     até o PDF baixar. O arquivo sai com nome como
     <code>Relatório Minutar Despacho - 2ª Vara do Trabalho de São Luís (TRT-16) - 07-11-2026 às 15h40.pdf</code>.</li>
 </ol>
+
+<h2>Entradas de ontem (triagem diária)</h2>
+<p>Este botão não gera o PDF completo. Ele pergunta a data de início (o padrão é o último dia útil;
+  na segunda-feira, pega sexta, sábado e domingo) e baixa um arquivo <code>.md</code> só com os processos
+  que entraram na caixa no período e ainda estão nela. Esse arquivo vai para o assistente de triagem diária.</p>
+<p>
+    <a class="botao botao-entradas" href="javascript:(function()%7Bif(!%2F%5C.jus%5C.br%24%2F.test(location.hostname))%7Balert('Abra%20o%20PJe%20e%20clique%20de%20novo.')%3Breturn%7Dwindow.__relatorioCaixa%3D%7B%22id%22%3A16%2C%22nome%22%3A%22Minutar%20Despacho%22%7D%3Bvar%20s%3Ddocument.createElement('script')%3Bs.src%3D'https%3A%2F%2Fdelanoalmeida-bit.github.io%2Frelatorio-caixas-pje%2Fentradas.js%3Fv%3D'%2BMath.floor(Date.now()%2F36e5)%3Bs.onerror%3Dfunction()%7Balert('N%C3%A3o%20consegui%20carregar%20o%20gerador%20do%20relat%C3%B3rio%20(rede%20ou%20bloqueio%20do%20tribunal).')%7D%3Bdocument.body.appendChild(s)%7D)()" onclick="alert('Não clique aqui: arraste o botão para a barra de favoritos.');return false;">Entradas de ontem: Minutar Despacho</a>
+</p>
 
 <div class="caixa">
   <strong>Privacidade.</strong> O relatório é montado dentro do seu navegador, com a sua sessão do PJe.
