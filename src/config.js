@@ -46,5 +46,18 @@ export const CONFIG = Object.freeze({
   FAIXAS_DIAS: [30, 60, 90, 120, 180],
 
   // Endereço publicado do gerador (o favorito só carrega este arquivo).
-  URL_SCRIPT: 'https://delanoalmeida-bit.github.io/relatorio-caixas-pje/relatorio.js'
+  URL_SCRIPT: 'https://delanoalmeida-bit.github.io/relatorio-caixas-pje/relatorio.js',
+
+  // Botões de "entradas de ontem" (arquivo .md para o assistente de triagem diária).
+  URL_SCRIPT_ENTRADAS: 'https://delanoalmeida-bit.github.io/relatorio-caixas-pje/entradas.js',
+  CAIXAS_ENTRADAS: [
+    { id: 16, nome: 'Minutar Despacho' }
+  ],
+
+  // Divisão entre os assistentes de juiz pelo dígito final do número sequencial do CNJ
+  // (0017784-75.2024... → final 4). Alterar aqui quando a lotação mudar.
+  DIVISAO_ASSISTENTES: [
+    { digitos: [0, 1, 2, 3, 4], nome: 'Fábio Henrique' },
+    { digitos: [5, 6, 7, 8, 9], nome: 'Alexsandro' }
+  ]
 });
