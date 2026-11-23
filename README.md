@@ -16,6 +16,10 @@ na caixa no período e ainda estão nela: tabela para leitura e bloco JSON para 
 triagem diária. O relatório completo não muda. Código em `src/entradas/`; divisão dos assistentes
 pelo dígito final em `src/config.js` (`DIVISAO_ASSISTENTES`).
 
+Dígito final: processo nascido no PJe usa o 7º algarismo do sequencial (0017784 → 4); processo
+físico, migrado ou não, usa o último algarismo do número físico, desprezando o "00" final
+(0132300-70.2008 → 3). Regra e datas de implantação em `src/motor/classificadores/numeracao_cnj.js`.
+
 ## Privacidade
 Tudo roda no navegador, com a sessão do próprio usuário. Nenhum dado de processo sai do computador.
 CPF, e-mail, telefone e endereço são descartados antes de montar o PDF; em segredo de justiça, as

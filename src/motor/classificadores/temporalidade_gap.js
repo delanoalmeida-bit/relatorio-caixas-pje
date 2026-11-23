@@ -1,3 +1,5 @@
+import { origemNumeracao } from './numeracao_cnj.js';
+
 /**
  * Módulo de temporalidade e heurística do Gap Temporal (CNJ vs Peça mais antiga).
  * Distingue processos 100% digitais de processos físicos migrados para o PJe na fase de execução.
@@ -47,11 +49,12 @@ export function analisarGapAutos(processoOuRegistro) {
   let ehProcessoFisicoMigrado = false;
   let alertaAutos = 'Autos digitais integrais';
 
-  // Regra primária do TRT-2:
-  // Processos físicos migrados têm numeração sequencial iniciada por '0' (ex: 0096500-..., 0116800-...).
-  // Processos nativos eletrônicos PJe iniciam na faixa 1000000+ (primeiro dígito '1').
-  const primeiroDigito = cnj ? String(cnj).trim()[0] : '';
-  const ehFaixaFisica = primeiroDigito === '0';
+  // Regra primária: numeração de processo físico (ano ≤ 2012, ou 2013 abaixo de 0016000 ou
+  // anterior à implantação do PJe). Ver numeracao_cnj.js. Vale também para o padrão do TRT-2
+  // (0096500-55.2001 → físico; 1000647-56.2018 → nativo).
+  const p0 = processoOuRegistro.processo || processoOuRegistro;
+  const origem = cnj ? origemNumeracao(cnj, { autuadoEm: p0.autuadoEm || null }) : null;
+  const ehFaixaFisica = Boolean(origem && origem.origem === 'fisico');
 
   const tipoNorm = tipoPecaMaisAntiga.toUpperCase();
   const temCertidaoMigracao = tipoNorm.includes('TERMO DE ABERTURA') || tipoNorm.includes('MIGRACAO') || tipoNorm.includes('TERMO DE MIGRACAO');

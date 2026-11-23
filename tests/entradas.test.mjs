@@ -41,6 +41,9 @@ test('dígito final e assistente', () => {
   assert.equal(assistentePeloDigito('0017784-75.2024.5.16.0002', CONFIG.DIVISAO_ASSISTENTES), 'Fábio Henrique');
   assert.equal(assistentePeloDigito('0016165-13.2024.5.16.0002', CONFIG.DIVISAO_ASSISTENTES), 'Alexsandro');
   assert.equal(digitoFinal('xyz'), null);
+  assert.equal(digitoFinal('0132300-70.2008.5.16.0002'), 3);
+  assert.equal(assistentePeloDigito('0132300-70.2008.5.16.0002', CONFIG.DIVISAO_ASSISTENTES), 'Fábio Henrique');
+  assert.equal(assistentePeloDigito('0156700-70.2010.5.16.0002', CONFIG.DIVISAO_ASSISTENTES), 'Alexsandro');
 });
 
 function item(i, entrada) {
