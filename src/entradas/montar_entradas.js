@@ -1,6 +1,7 @@
 import { identificarLotes, trabalhadoresDoProcesso, oabsDoTrabalhador } from '../relatorio/reclamadas_lotes.js';
 import { formatarData } from '../relatorio/dados_relatorio_vt.js';
 import { nomeOrgaoLegivel, tribunalLegivel, dataHoraBR } from '../relatorio/nome_arquivo.js';
+import { digitoFinal as digitoPelaOrigem, origemNumeracao } from '../motor/classificadores/numeracao_cnj.js';
 
 /*
  * Arquivo das entradas do período (botão "entradas de ontem"): uma tabela para quem lê e um
@@ -18,15 +19,19 @@ function ehSegredo(proc) {
   return Boolean((r.listagem && r.listagem.segredoDeJustica) || (r.processo && r.processo.segredoDeJustica));
 }
 
-/** Dígito final do número sequencial do CNJ: "0017784-75.2024..." → 4. */
-export function digitoFinal(cnj) {
-  const m = String(cnj || '').match(/^(\d{7})-/);
-  return m ? Number(m[1][6]) : null;
+/**
+ * Dígito final do processo: "0017784-75.2024..." → 4; físico "0132300-70.2008..." → 3
+ * (regra em src/motor/classificadores/numeracao_cnj.js).
+ */
+export function digitoFinal(cnj, opcoes = {}) {
+  return digitoPelaOrigem(cnj, opcoes);
 }
 
+const autuacao = proc => ((proc.raw && proc.raw.processo) || {}).autuadoEm || null;
+
 /** Assistente de juiz pela regra do dígito final (CONFIG.DIVISAO_ASSISTENTES). */
-export function assistentePeloDigito(cnj, divisao = []) {
-  const d = digitoFinal(cnj);
+export function assistentePeloDigito(cnj, divisao = [], opcoes = {}) {
+  const d = digitoFinal(cnj, opcoes);
   if (d === null) return null;
   const regra = divisao.find(r => (r.digitos || []).includes(d));
   return regra ? regra.nome : null;
@@ -48,6 +53,9 @@ function alertas(proc, lotes) {
   if (proc.sindicatos && proc.sindicatos.temSindicato) a.push('Sindicato');
   if (proc.temComentario) a.push('Comentário no PJe');
   if (ehSegredo(proc)) a.push('Segredo de justiça');
+  const o = origemNumeracao(proc.cnj, { autuadoEm: autuacao(proc) });
+  if (o && o.origem === 'fisico') a.push('Numeração de processo físico (dígito = 5º algarismo)');
+  if (o && o.ambiguo) a.push('Dígito a conferir: 2013 terminado em 00, sem data de autuação');
   for (const n of lotes) a.push(`Lote ${n}`);
   return a;
 }
@@ -94,8 +102,9 @@ export function montarEntradas({ processos, naoLidos = [], meta }) {
       fase: p.fase,
       tarefa: p.tarefa,
       entradaNaTarefa: formatarData(p.entrada, true),
-      digitoFinal: digitoFinal(p.cnj),
-      assistentePeloDigito: assistentePeloDigito(p.cnj, meta.divisao),
+      origemNumeracao: (origemNumeracao(p.cnj, { autuadoEm: autuacao(p) }) || {}).origem || null,
+      digitoFinal: digitoFinal(p.cnj, { autuadoEm: autuacao(p) }),
+      assistentePeloDigito: assistentePeloDigito(p.cnj, meta.divisao, { autuadoEm: autuacao(p) }),
       responsavelNoPJe: p.responsavel || null,
       poloAtivo: segredo ? SEGREDO : nomes(p.partes.ativos),
       poloPassivo: segredo ? SEGREDO : nomes(p.partes.passivos),
